@@ -128,8 +128,7 @@ function showDashboard() {
 
   try {
   const topicCards = TOPICS.map(t => `
-    <div class="topic-card" style="border-color:${t.color}22" onclick="">
-      <div class="topic-card-bar" style="background:${t.color}"></div>
+    <div class="topic-card" style="border-color:${t.color}33">
       <div class="topic-icon">${t.icon}</div>
       <div class="topic-name" style="color:${t.color}">${t.name}</div>
       <div class="topic-count">${t.questionFiles.length} questions</div>
@@ -140,40 +139,40 @@ function showDashboard() {
     return `
     <div class="q-card" onclick="openQ('${q.id}')">
       <div class="q-card-meta">
-        <span class="q-card-num">#${q.id}</span>
+        <span class="q-card-id">#${q.id}</span>
         <span class="badge ${diff}">${q.difficulty || 'Medium'}</span>
         ${solved.has(q.id) ? '<span style="color:var(--green);font-size:.72rem;margin-left:auto">✓ Solved</span>' : ''}
       </div>
       <div class="q-card-title">${q.title}</div>
-      <div class="q-card-topic">📁 ${q.topic}</div>
+      <div class="q-card-cat">📁 ${q.topic}</div>
     </div>`;
   }).join('');
 
   document.getElementById('main').innerHTML = `
     <div class="dash">
       <div class="hero">
-        <div class="hero-title">TCŞ NQT <span>Prep</span></div>
-        <div class="hero-sub">Complete mastery of TCS Digital, Ninja, and Prime rounds with real-time interpretation.</div>
+        <div class="hero-title">TCS NQT <span class="hl">Prep</span></div>
+        <div class="hero-sub">Master Arrays, Strings, DP and more. Real Python interpreter. TCS Digital / Ninja / Prime ready.</div>
         <div class="stats-row">
           <div class="stat-box">
              <div class="sk">Total Problems</div>
-             <div class="sv" style="color:var(--accent)">${ALL_QUESTIONS.length}</div>
+             <div class="sv" style="color:var(--cyan)">${ALL_QUESTIONS.length}</div>
           </div>
           <div class="stat-box">
              <div class="sk">Solved</div>
-             <div class="sv" style="color:var(--success)">${solved.size}</div>
+             <div class="sv" style="color:var(--green)">${solved.size}</div>
           </div>
           <div class="stat-box">
              <div class="sk">Topics</div>
-             <div class="sv" style="color:var(--secondary)">${TOPICS.length}</div>
+             <div class="sv" style="color:var(--pink)">${TOPICS.length}</div>
           </div>
         </div>
       </div>
 
-      <div class="sec-title">🎯 Topics</div>
+      <div class="sec-heading">🎯 Topics</div>
       <div class="topics-grid">${topicCards}</div>
 
-      <div class="sec-title">📋 Problems</div>
+      <div class="sec-heading">📋 Problems</div>
       <div class="qlist">${qCards}</div>
     </div>`;
   } catch(e) {
@@ -199,13 +198,10 @@ function renderQ() {
   const q = currentQ;
 
   const exHTML = q.examples.map((ex, i) => `
-    <div class="ex-block">
-      <div style="padding:6px 10px;background:rgba(0,0,0,.2);font-family:var(--mono);font-size:.6rem;color:var(--tx3);text-transform:uppercase;letter-spacing:.1em">Example ${i+1}</div>
-      <div class="ex-grid">
-        <div class="ex-side"><div class="ex-lbl">Input</div><div class="ex-val">${ex.input}</div></div>
-        <div class="ex-side"><div class="ex-lbl">Output</div><div class="ex-val">${ex.output}</div></div>
-      </div>
-      ${ex.explanation ? `<div class="ex-note">💡 ${ex.explanation}</div>` : ''}
+    <div class="example-card">
+      <div class="tc-col"><div class="ex-lbl">Input</div><div class="ex-val">${ex.input}</div></div>
+      <div class="tc-col"><div class="ex-lbl">Output</div><div class="ex-val">${ex.output}</div></div>
+      ${ex.explanation ? `<div class="ex-hint">💡 ${ex.explanation}</div>` : ''}
     </div>`).join('');
 
   const visTC  = q.testCases.filter(tc => !tc.hidden);
@@ -225,26 +221,29 @@ function renderQ() {
 
       <!-- ── LEFT: PROBLEM ── -->
       <div class="q-pane">
-        <div class="q-meta">
-          <span style="font-family:var(--mono);font-size:.68rem;color:var(--tx3)">#${q.id}</span>
-          <span class="badge ${q.difficulty.toLowerCase()}">${q.difficulty}</span>
-          <span style="font-family:var(--mono);font-size:.68rem;color:var(--accent);background:var(--accentBg);padding:2px 7px;border-radius:4px;border:1px solid rgba(0,212,255,.2)">📁 ${q.topic}</span>
+        <div class="q-pane-meta">
+          <span class="q-id-tag">#${q.id}</span>
+          <span class="badge ${(q.difficulty||'medium').toLowerCase()}">${q.difficulty||'Medium'}</span>
+          <span class="q-topic-tag">📁 ${q.topic}</span>
         </div>
         <div class="q-title">${q.title}</div>
-        <div class="context"><strong>🌍 Context:</strong> ${q.realWorldContext}</div>
+        <div class="context-box">🌍 ${q.realWorldContext}</div>
         <div class="q-desc">${q.description}</div>
 
-        <div class="q-sec"><div class="q-sec-lbl">Constraints</div>
-          <ul class="constraints">${q.constraints.map(c=>`<li>${c}</li>`).join('')}</ul></div>
+        <div class="sec-lbl">Constraints</div>
+        <ul style="padding-left:18px;color:var(--tx2);font-size:.9rem;line-height:1.8">${q.constraints.map(c=>`<li>${c}</li>`).join('')}</ul>
 
-        <div class="q-sec"><div class="q-sec-lbl">Input Format</div><div class="io-block">${q.inputFormat}</div></div>
-        <div class="q-sec"><div class="q-sec-lbl">Output Format</div><div class="io-block">${q.outputFormat}</div></div>
-        <div class="q-sec"><div class="q-sec-lbl">Examples</div>${exHTML}</div>
+        <div class="sec-lbl">Input Format</div>
+        <div class="io-block">${q.inputFormat}</div>
+        <div class="sec-lbl">Output Format</div>
+        <div class="io-block">${q.outputFormat}</div>
+        <div class="sec-lbl">Examples</div>
+        ${exHTML}
       </div>
 
       <!-- ── RIGHT: CODE + SOLUTIONS ── -->
       <div class="c-pane">
-        <div class="c-hdr">
+        <div class="c-tabs">
           <div class="tabs">
             <div class="tab ${activeTab==='code'?'on':''}"  onclick="switchTab('code')">✏️ Your Code</div>
             <div class="tab ${activeTab==='brute'?'on':''}" onclick="switchTab('brute')">🔨 Brute Force</div>
@@ -268,32 +267,33 @@ function renderQ() {
 
           <!-- BRUTE FORCE -->
           <div class="tab-panel ${activeTab==='brute'?'on':''}" id="panel-brute">
-            <div class="sol-hdr">
-              <span>🔨 Brute Force </span>
-              <button class="btn-copy" onclick="copyCode(currentQ.bruteForce.code)">Copy Solution</button>
+            <div class="sol-view">
+              <div class="sol-hdr">
+                <span class="sol-hdr-title">🔨 Brute Force</span>
+                <button class="btn-copy" onclick="copyCode(currentQ.bruteForce.code)">📋 Copy</button>
+              </div>
+              <div class="sol-meta">
+                ⏱ Time: <b>${currentQ.bruteForce.time||currentQ.bruteForce.timeComplexity||'—'}</b> &nbsp;|&nbsp;
+                💾 Space: <b>${currentQ.bruteForce.space||currentQ.bruteForce.spaceComplexity||'—'}</b><br/>
+                <span style="color:var(--tx2);font-size:.85rem">${currentQ.bruteForce.desc||currentQ.bruteForce.approach||''}</span>
+              </div>
+              <div class="sol-code">${hl(currentQ.bruteForce.code)}</div>
             </div>
-            <div class="context">
-              <div class="q-sec-lbl">Analysis</div>
-              Time Complexity: <b>${currentQ.bruteForce.time}</b><br/>
-              Space Complexity: <b>${currentQ.bruteForce.space}</b>
-            </div>
-            <div class="sol-code">${hl(currentQ.bruteForce.code)}</div>
           </div>
 
           <!-- OPTIMAL -->
           <div class="tab-panel ${activeTab==='opt'?'on':''}" id="panel-opt">
-            <div class="sol-scroll">
-              <div class="sol-card">
-                <div class="sol-hdr">
-                  <span class="sol-lbl" style="color:var(--accent)">⚡ Optimal</span>
-                  <div class="cx">
-                    <span class="cx-badge cx-t">Time: ${q.optimal.timeComplexity}</span>
-                    <span class="cx-badge cx-s">Space: ${q.optimal.spaceComplexity}</span>
-                  </div>
-                </div>
-                <div class="sol-approach">${q.optimal.approach}</div>
-                <div class="sol-code">${hl(q.optimal.code)}</div>
+            <div class="sol-view">
+              <div class="sol-hdr">
+                <span class="sol-hdr-title">⚡ Optimal Solution</span>
+                <button class="btn-copy" onclick="copyCode(currentQ.optimal.code)">📋 Copy</button>
               </div>
+              <div class="sol-meta">
+                ⏱ Time: <b>${currentQ.optimal.time||currentQ.optimal.timeComplexity||'—'}</b> &nbsp;|&nbsp;
+                💾 Space: <b>${currentQ.optimal.space||currentQ.optimal.spaceComplexity||'—'}</b><br/>
+                <span style="color:var(--tx2);font-size:.85rem">${currentQ.optimal.desc||currentQ.optimal.approach||''}</span>
+              </div>
+              <div class="sol-code">${hl(currentQ.optimal.code)}</div>
             </div>
           </div>
         </div>
@@ -317,12 +317,12 @@ function renderQ() {
     </div>
 
     <!-- VERDICT OVERLAY -->
-    <div class="veil" id="veil" onclick="closeVerdict(event)">
-      <div class="v-card">
-        <button class="v-close" onclick="closeVerdict()">✕</button>
+    <div id="veil" onclick="closeVerdict(event)">
+      <div class="verdict-box">
         <div class="v-title" id="v-title"></div>
-        <div class="v-sub"   id="v-sub"></div>
-        <div class="v-list"  id="v-list"></div>
+        <div style="color:var(--tx2);font-size:.85rem;margin-bottom:16px" id="v-sub"></div>
+        <div id="v-list"></div>
+        <button class="v-close" onclick="closeVerdict()">Close</button>
       </div>
     </div>`;
 
@@ -483,7 +483,7 @@ function showVerdict(pass, total, rows) {
 
 function closeVerdict(e) {
   if (!e || e.target.id === 'veil')
-    document.getElementById('veil')?.classList.remove('on');
+    document.getElementById('veil').classList.remove('on');
 }
 
 // ── SIDEBAR ────────────────────────────────────────────────
@@ -510,7 +510,7 @@ function renderSidebar() {
 // ── HEADER ─────────────────────────────────────────────────
 function updateHeader() {
   const el = document.getElementById('hdr-solved');
-  if (el) el.innerHTML = `Solved: <span>${solved.size}/${ALL_QUESTIONS.length}</span>`;
+  if (el) el.innerHTML = `Solved: <b>${solved.size}/${ALL_QUESTIONS.length}</b>`;
 }
 
 function clearEditor() {
