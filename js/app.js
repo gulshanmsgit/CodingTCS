@@ -136,12 +136,13 @@ function showDashboard() {
 
   const qCards = ALL_QUESTIONS.map(q => {
     const diff = (q.difficulty || 'Medium').toLowerCase();
+    const isSolved = solved.has(q.id);
     return `
-    <div class="q-card" onclick="openQ('${q.id}')">
+    <div class="q-card" onclick="openQ('${q.id}')" style="${isSolved ? 'border-color:rgba(16,255,176,0.2)' : ''}">
       <div class="q-card-meta">
         <span class="q-card-id">#${q.id}</span>
         <span class="badge ${diff}">${q.difficulty || 'Medium'}</span>
-        ${solved.has(q.id) ? '<span style="color:var(--green);font-size:.72rem;margin-left:auto">✓ Solved</span>' : ''}
+        ${isSolved ? '<span style="color:var(--green);font-size:.72rem;margin-left:auto;font-weight:800">✓ Solved</span>' : ''}
       </div>
       <div class="q-card-title">${q.title}</div>
       <div class="q-card-cat">📁 ${q.topic}</div>
@@ -151,11 +152,12 @@ function showDashboard() {
   document.getElementById('main').innerHTML = `
     <div class="dash">
       <div class="hero">
-        <div class="hero-title">TCS NQT <span class="hl">Prep</span></div>
-        <div class="hero-sub">Master Arrays, Strings, DP and more. Real Python interpreter. TCS Digital / Ninja / Prime ready.</div>
+        <div class="hero-eyebrow">TCS NQT 2026 Preparation</div>
+        <div class="hero-title">Master Coding<br>with <span class="hl">Real Python</span></div>
+        <div class="hero-sub">Arrays, Strings, DP &amp; more. Runs in your browser — no setup needed. Built for TCS Digital, Ninja &amp; Prime.</div>
         <div class="stats-row">
           <div class="stat-box">
-             <div class="sk">Total Problems</div>
+             <div class="sk">Problems</div>
              <div class="sv" style="color:var(--cyan)">${ALL_QUESTIONS.length}</div>
           </div>
           <div class="stat-box">
@@ -164,7 +166,7 @@ function showDashboard() {
           </div>
           <div class="stat-box">
              <div class="sk">Topics</div>
-             <div class="sv" style="color:var(--pink)">${TOPICS.length}</div>
+             <div class="sv" style="color:var(--violet)">${TOPICS.length}</div>
           </div>
         </div>
       </div>
@@ -172,7 +174,7 @@ function showDashboard() {
       <div class="sec-heading">🎯 Topics</div>
       <div class="topics-grid">${topicCards}</div>
 
-      <div class="sec-heading">📋 Problems</div>
+      <div class="sec-heading">📋 All Problems</div>
       <div class="qlist">${qCards}</div>
     </div>`;
   } catch(e) {
