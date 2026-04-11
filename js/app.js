@@ -8,7 +8,10 @@ let currentQ   = null;
 let activeTab  = 'code';
 let activeTcTab = 'custom';
 let tcResults  = [];
-let solved     = new Set(JSON.parse(localStorage.getItem('nqt_solved') || '[]'));
+let solved     = new Set();
+try { solved = new Set(JSON.parse(localStorage.getItem('nqt_solved') || '[]')); } catch(e) {}
+let revisions  = {};
+try { revisions = JSON.parse(localStorage.getItem('nqt_revisions') || '{}'); } catch(e) {}
 let pyodide    = null;
 let pyLoading  = true;
 
@@ -35,8 +38,77 @@ const ALL_QUESTIONS = [
   typeof Q_ARRAYS_18 !== 'undefined' ? Q_ARRAYS_18 : null,
   typeof Q_ARRAYS_19 !== 'undefined' ? Q_ARRAYS_19 : null,
   typeof Q_ARRAYS_20 !== 'undefined' ? Q_ARRAYS_20 : null,
-  // When you add a new topic file, register its constants here:
-  // typeof Q_STRINGS_1 !== 'undefined' ? Q_STRINGS_1 : null,
+  
+  typeof Q_STRINGS_1 !== 'undefined' ? Q_STRINGS_1 : null,
+  typeof Q_STRINGS_2 !== 'undefined' ? Q_STRINGS_2 : null,
+  typeof Q_STRINGS_3 !== 'undefined' ? Q_STRINGS_3 : null,
+  typeof Q_STRINGS_4 !== 'undefined' ? Q_STRINGS_4 : null,
+  typeof Q_STRINGS_5 !== 'undefined' ? Q_STRINGS_5 : null,
+  typeof Q_STRINGS_6 !== 'undefined' ? Q_STRINGS_6 : null,
+  typeof Q_STRINGS_7 !== 'undefined' ? Q_STRINGS_7 : null,
+  typeof Q_STRINGS_8 !== 'undefined' ? Q_STRINGS_8 : null,
+  typeof Q_STRINGS_9 !== 'undefined' ? Q_STRINGS_9 : null,
+  typeof Q_STRINGS_10 !== 'undefined' ? Q_STRINGS_10 : null,
+  typeof Q_STRINGS_11 !== 'undefined' ? Q_STRINGS_11 : null,
+  typeof Q_STRINGS_12 !== 'undefined' ? Q_STRINGS_12 : null,
+  typeof Q_STRINGS_13 !== 'undefined' ? Q_STRINGS_13 : null,
+  typeof Q_STRINGS_14 !== 'undefined' ? Q_STRINGS_14 : null,
+  typeof Q_STRINGS_15 !== 'undefined' ? Q_STRINGS_15 : null,
+  typeof Q_STRINGS_16 !== 'undefined' ? Q_STRINGS_16 : null,
+  typeof Q_STRINGS_17 !== 'undefined' ? Q_STRINGS_17 : null,
+  typeof Q_STRINGS_18 !== 'undefined' ? Q_STRINGS_18 : null,
+  typeof Q_STRINGS_19 !== 'undefined' ? Q_STRINGS_19 : null,
+  typeof Q_STRINGS_20 !== 'undefined' ? Q_STRINGS_20 : null,
+  typeof Q_STRINGS_21 !== 'undefined' ? Q_STRINGS_21 : null,
+  typeof Q_STRINGS_22 !== 'undefined' ? Q_STRINGS_22 : null,
+
+  typeof Q_SORTING_1 !== 'undefined' ? Q_SORTING_1 : null,
+  typeof Q_SORTING_2 !== 'undefined' ? Q_SORTING_2 : null,
+  typeof Q_SORTING_3 !== 'undefined' ? Q_SORTING_3 : null,
+  typeof Q_SORTING_4 !== 'undefined' ? Q_SORTING_4 : null,
+  typeof Q_SORTING_5 !== 'undefined' ? Q_SORTING_5 : null,
+  typeof Q_SORTING_6 !== 'undefined' ? Q_SORTING_6 : null,
+  typeof Q_SORTING_7 !== 'undefined' ? Q_SORTING_7 : null,
+  typeof Q_SORTING_8 !== 'undefined' ? Q_SORTING_8 : null,
+  typeof Q_SORTING_9 !== 'undefined' ? Q_SORTING_9 : null,
+  typeof Q_SORTING_10 !== 'undefined' ? Q_SORTING_10 : null,
+  typeof Q_SORTING_11 !== 'undefined' ? Q_SORTING_11 : null,
+  typeof Q_SORTING_12 !== 'undefined' ? Q_SORTING_12 : null,
+  typeof Q_SORTING_13 !== 'undefined' ? Q_SORTING_13 : null,
+  typeof Q_SORTING_14 !== 'undefined' ? Q_SORTING_14 : null,
+  typeof Q_SORTING_15 !== 'undefined' ? Q_SORTING_15 : null,
+  typeof Q_SORTING_16 !== 'undefined' ? Q_SORTING_16 : null,
+  typeof Q_SORTING_17 !== 'undefined' ? Q_SORTING_17 : null,
+  typeof Q_SORTING_18 !== 'undefined' ? Q_SORTING_18 : null,
+
+  typeof Q_NUMBER_1 !== 'undefined' ? Q_NUMBER_1 : null,
+  typeof Q_NUMBER_2 !== 'undefined' ? Q_NUMBER_2 : null,
+  typeof Q_NUMBER_3 !== 'undefined' ? Q_NUMBER_3 : null,
+  typeof Q_NUMBER_4 !== 'undefined' ? Q_NUMBER_4 : null,
+  typeof Q_NUMBER_5 !== 'undefined' ? Q_NUMBER_5 : null,
+  typeof Q_NUMBER_6 !== 'undefined' ? Q_NUMBER_6 : null,
+  typeof Q_NUMBER_7 !== 'undefined' ? Q_NUMBER_7 : null,
+  typeof Q_NUMBER_8 !== 'undefined' ? Q_NUMBER_8 : null,
+  typeof Q_NUMBER_9 !== 'undefined' ? Q_NUMBER_9 : null,
+  typeof Q_NUMBER_10 !== 'undefined' ? Q_NUMBER_10 : null,
+  typeof Q_NUMBER_11 !== 'undefined' ? Q_NUMBER_11 : null,
+  typeof Q_NUMBER_12 !== 'undefined' ? Q_NUMBER_12 : null,
+  typeof Q_NUMBER_13 !== 'undefined' ? Q_NUMBER_13 : null,
+  typeof Q_NUMBER_14 !== 'undefined' ? Q_NUMBER_14 : null,
+  typeof Q_NUMBER_15 !== 'undefined' ? Q_NUMBER_15 : null,
+  typeof Q_NUMBER_16 !== 'undefined' ? Q_NUMBER_16 : null,
+  typeof Q_NUMBER_17 !== 'undefined' ? Q_NUMBER_17 : null,
+  typeof Q_NUMBER_18 !== 'undefined' ? Q_NUMBER_18 : null,
+  typeof Q_NUMBER_19 !== 'undefined' ? Q_NUMBER_19 : null,
+  typeof Q_NUMBER_20 !== 'undefined' ? Q_NUMBER_20 : null,
+  typeof Q_NUMBER_21 !== 'undefined' ? Q_NUMBER_21 : null,
+  typeof Q_NUMBER_22 !== 'undefined' ? Q_NUMBER_22 : null,
+  typeof Q_NUMBER_23 !== 'undefined' ? Q_NUMBER_23 : null,
+  typeof Q_NUMBER_24 !== 'undefined' ? Q_NUMBER_24 : null,
+  typeof Q_NUMBER_25 !== 'undefined' ? Q_NUMBER_25 : null,
+  typeof Q_NUMBER_26 !== 'undefined' ? Q_NUMBER_26 : null,
+  typeof Q_NUMBER_27 !== 'undefined' ? Q_NUMBER_27 : null,
+  typeof Q_NUMBER_28 !== 'undefined' ? Q_NUMBER_28 : null,
 ].filter(Boolean);
 
 // ── PYTHON EXECUTOR (LOCAL PYODIDE) ────────────────────────
@@ -63,21 +135,21 @@ async function runPython(code, stdin) {
   if (!pyodide) return 'ERROR: Interpreter loading...';
   
   try {
-    // Reset standard input
+    // Safely set stdin via globals to avoid string injection issues
+    pyodide.globals.set("__stdin_data__", stdin);
     pyodide.runPython(`
 import sys
 import io
-sys.stdin = io.StringIO("""${stdin}""")
+sys.stdin = io.StringIO(__stdin_data__)
 sys.stdout = io.StringIO()
     `);
     
-    // Run user code
+    // Use runPythonAsync to allow some concurrency (though main thread still blocks on loops)
     await pyodide.runPythonAsync(code);
     
-    // Capture output
-    const stdout = pyodide.runPython("sys.stdout.getvalue()");
-    return stdout.trim();
+    return pyodide.runPython("sys.stdout.getvalue()").trim();
   } catch (e) {
+    console.error("Python Execution Error:", e);
     return 'ERROR: ' + e.message;
   }
 }
@@ -121,62 +193,198 @@ const codeKey   = id => `nqt_code_${id}`;
 const saveCode  = (id, v) => localStorage.setItem(codeKey(id), v);
 const loadCode  = id => localStorage.getItem(codeKey(id)) || '';
 
+function toggleSidebar() {
+  document.querySelector('.shell').classList.toggle('collapsed');
+}
+
+function saveRevision(id, status, date) {
+  if (status === 'None') {
+    delete revisions[id];
+  } else {
+    revisions[id] = { status, date };
+  }
+  localStorage.setItem('nqt_revisions', JSON.stringify(revisions));
+  if (currentQ && currentQ.id === id) renderQ();
+}
+
+function showKanban() {
+  currentQ = null;
+  renderSidebar();
+
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    if (b.textContent === 'Kanban Board') b.classList.add('active');
+    else b.classList.remove('active');
+  });
+  
+  const cols = [
+    { id: 'To Review', name: '🔴 To Review' },
+    { id: 'Revising', name: '🟡 Revising' },
+    { id: 'Completed', name: '🟢 Completed' }
+  ];
+  
+  const colHTML = cols.map(c => {
+    const qs = Object.entries(revisions).filter(([id, r]) => r.status === c.id);
+    const qCards = qs.map(([id, r]) => {
+      const q = ALL_QUESTIONS.find(x => x.id === id);
+      if (!q) return '';
+      return `
+        <div class="kb-card" draggable="true" ondragstart="kbOnDragStart(event, '${q.id}')" onclick="openQ('${q.id}')">
+          <div class="q-card-meta">
+            <span class="q-card-id">#${q.id}</span>
+            ${r.date ? `<span style="margin-left:auto;color:var(--amber);font-size:.72rem">📅 ${r.date}</span>` : ''}
+          </div>
+          <div style="font-size:0.95rem; font-weight:600; margin:8px 0; color:var(--tx)">${q.title}</div>
+          <div style="font-size:0.75rem; color:var(--tx3)">📁 ${q.topic}</div>
+        </div>`;
+    }).join('');
+    
+    return `
+      <div class="kb-col" ondragover="kbOnDragOver(event)" ondrop="kbOnDrop(event, '${c.id}')">
+        <div class="kb-col-hdr">
+          <span>${c.name}</span>
+          <span style="opacity:0.5; font-size:0.8rem">${qs.length}</span>
+        </div>
+        <div class="kb-list">${qCards || '<div style="color:var(--tx3);font-size:.85rem;text-align:center;padding:20px;">Drop here</div>'}</div>
+      </div>`;
+  }).join('');
+  
+  document.getElementById('main').innerHTML = `
+    <div class="dash">
+      <div class="hero" style="padding:32px 0;">
+        <div class="hero-title" style="font-size:2.4rem;">Revision <span class="hl">Kanban</span></div>
+        <div class="hero-sub">Drag and drop cards to update their status. Stays synced with your progress.</div>
+      </div>
+      <div class="kb-grid">${colHTML}</div>
+    </div>`;
+}
+
+// ── KANBAN DRAG & DROP ──
+let kbDraggingId = null;
+function kbOnDragStart(e, id) {
+  kbDraggingId = id;
+  e.dataTransfer.setData('text/plain', id);
+  e.currentTarget.classList.add('dragging');
+}
+function kbOnDragOver(e) { e.preventDefault(); }
+function kbOnDrop(e, status) {
+  e.preventDefault();
+  if (!kbDraggingId) return;
+  const date = revisions[kbDraggingId]?.date || '';
+  saveRevision(kbDraggingId, status, date);
+  kbDraggingId = null;
+  showKanban();
+}
+
 // ── DASHBOARD ──────────────────────────────────────────────
-function showDashboard() {
+function showDashboard(topicId = null) {
   currentQ = null;
   renderSidebar();
 
   try {
-  const topicCards = TOPICS.map(t => `
-    <div class="topic-card" style="border-color:${t.color}33">
-      <div class="topic-icon">${t.icon}</div>
-      <div class="topic-name" style="color:${t.color}">${t.name}</div>
-      <div class="topic-count">${t.questionFiles.length} questions</div>
-    </div>`).join('');
+    document.querySelectorAll('.nav-btn').forEach(b => {
+      if (b.textContent === 'Kanban Board') {
+          b.classList.remove('active');
+      } else if (!topicId && b.textContent === 'Home') {
+          b.classList.add('active');
+      } else if (topicId && b.textContent.toLowerCase().replace(' ', '-').includes(topicId)) {
+          b.classList.add('active');
+      } else {
+          b.classList.remove('active');
+      }
+    });
+    const topicCards = TOPICS.map(t => {
+      const isActive = topicId === t.id;
+      return `
+      <div class="topic-card" onclick="showDashboard('${t.id}')" style="cursor:pointer; border-color:${isActive ? t.color : t.color+'33'}; background:${isActive ? 'var(--bg3)' : 'transparent'}; box-shadow:${isActive ? '0 0 12px '+t.color+'44' : 'none'}">
+        <div class="topic-icon">${t.icon}</div>
+        <div class="topic-name" style="color:${t.color}">${t.name}</div>
+        <div class="topic-count">${t.questionFiles.length} questions</div>
+      </div>`;
+    }).join('');
 
-  const qCards = ALL_QUESTIONS.map(q => {
-    const diff = (q.difficulty || 'Medium').toLowerCase();
-    const isSolved = solved.has(q.id);
-    return `
-    <div class="q-card" onclick="openQ('${q.id}')" style="${isSolved ? 'border-color:rgba(16,255,176,0.2)' : ''}">
-      <div class="q-card-meta">
-        <span class="q-card-id">#${q.id}</span>
-        <span class="badge ${diff}">${q.difficulty || 'Medium'}</span>
-        ${isSolved ? '<span style="color:var(--green);font-size:.72rem;margin-left:auto;font-weight:800">✓ Solved</span>' : ''}
-      </div>
-      <div class="q-card-title">${q.title}</div>
-      <div class="q-card-cat">📁 ${q.topic}</div>
-    </div>`;
-  }).join('');
+    let filteredQuestions = [...ALL_QUESTIONS];
+    let chartHTML = '';
+    
+    if (topicId) {
+       const topicObj = TOPICS.find(t => t.id === topicId);
+       if (topicObj) {
+         filteredQuestions = filteredQuestions.filter(q => q.topic === topicObj.name);
+         const topicQCount = filteredQuestions.length;
+         const topicSolved = filteredQuestions.filter(q => solved.has(q.id)).length;
+         const pct = topicQCount > 0 ? Math.round((topicSolved/topicQCount)*100) : 0;
+         
+         chartHTML = `
+           <div style="margin-top: 32px; padding: 24px; background: var(--bg2); border: 1px solid var(--bd2); border-radius: var(--r-lg);">
+             <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+                <span style="font-weight:600; color:${topicObj.color}">${topicObj.name} Progress Analytics</span>
+                <span style="font-family:var(--mono)">${topicSolved} / ${topicQCount} (${pct}%) Completed</span>
+             </div>
+             <div style="height:10px; background:var(--bg); border-radius:99px; overflow:hidden; border:1px solid var(--bd);">
+               <div style="height:100%; width:${pct}%; background:${topicObj.color}; box-shadow:0 0 10px ${topicObj.color}; transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);"></div>
+             </div>
+           </div>`;
+       }
+    }
 
-  document.getElementById('main').innerHTML = `
-    <div class="dash">
-      <div class="hero">
-        <div class="hero-eyebrow">TCS NQT 2026 Preparation</div>
-        <div class="hero-title">Master Coding<br>with <span class="hl">Real Python</span></div>
-        <div class="hero-sub">Arrays, Strings, DP &amp; more. Runs in your browser — no setup needed. Built for TCS Digital, Ninja &amp; Prime.</div>
-        <div class="stats-row">
-          <div class="stat-box">
-             <div class="sk">Problems</div>
-             <div class="sv" style="color:var(--cyan)">${ALL_QUESTIONS.length}</div>
-          </div>
-          <div class="stat-box">
-             <div class="sk">Solved</div>
-             <div class="sv" style="color:var(--green)">${solved.size}</div>
-          </div>
-          <div class="stat-box">
-             <div class="sk">Topics</div>
-             <div class="sv" style="color:var(--violet)">${TOPICS.length}</div>
+    filteredQuestions.sort((a, b) => {
+      const p = { 'To Review': 3, 'Revising': 2, 'Completed': 0 };
+      const pa = p[revisions[a.id]?.status] ?? 1;
+      const pb = p[revisions[b.id]?.status] ?? 1;
+      return pb - pa;
+    });
+
+    const qCards = filteredQuestions.map(q => {
+      const diff = (q.difficulty || 'Medium').toLowerCase();
+      const isSolved = solved.has(q.id);
+      const rev = revisions[q.id];
+      let revTag = '';
+      if (rev) {
+          const color = rev.status === 'To Review' ? 'var(--red)' : rev.status === 'Revising' ? 'var(--amber)' : 'var(--green)';
+          revTag = `<span style="font-size:0.6rem; padding: 2px 6px; border-radius:4px; background:var(--bg3); border:1px solid ${color}; color:${color}">${rev.status}</span>`;
+      }
+      return `
+      <div class="q-card" onclick="openQ('${q.id}')" style="${isSolved ? 'border-color:rgba(16,255,176,0.2)' : ''}">
+        <div class="q-card-meta">
+          <span class="q-card-id">#${q.id}</span>
+          <span class="badge ${diff}">${q.difficulty || 'Medium'}</span>
+          ${revTag}
+          ${isSolved ? '<span style="color:var(--green);font-size:.72rem;margin-left:auto;font-weight:800">✓ Solved</span>' : ''}
+        </div>
+        <div class="q-card-title">${q.title}</div>
+        <div class="q-card-cat">📁 ${q.topic}</div>
+      </div>`;
+    }).join('');
+
+    document.getElementById('main').innerHTML = `
+      <div class="dash">
+        <div class="hero">
+          <div class="hero-eyebrow">TCS NQT 2026 Preparation</div>
+          <div class="hero-title">Master Coding<br>with <span class="hl">Real Python</span></div>
+          <div class="hero-sub">Arrays, Strings, DP &amp; more. Runs in your browser — no setup needed. Built for TCS Digital, Ninja &amp; Prime.</div>
+          <div class="stats-row">
+            <div class="stat-box">
+               <div class="sk">Problems</div>
+               <div class="sv" style="color:var(--cyan)">${ALL_QUESTIONS.length}</div>
+            </div>
+            <div class="stat-box">
+               <div class="sk">Solved</div>
+               <div class="sv" style="color:var(--green)">${solved.size}</div>
+            </div>
+            <div class="stat-box">
+               <div class="sk">Topics</div>
+               <div class="sv" style="color:var(--violet)">${TOPICS.length}</div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="sec-heading">🎯 Topics</div>
-      <div class="topics-grid">${topicCards}</div>
+        <div class="sec-heading">🎯 Topics</div>
+        <div class="topics-grid">${topicCards}</div>
+        
+        ${chartHTML}
 
-      <div class="sec-heading">📋 All Problems</div>
-      <div class="qlist">${qCards}</div>
-    </div>`;
+        <div class="sec-heading" style="margin-top: ${chartHTML ? '32px' : '0px'}">📋 ${topicId ? 'Filtered' : 'All'} Problems</div>
+        <div class="qlist">${qCards}</div>
+      </div>`;
   } catch(e) {
     console.error('showDashboard error:', e);
     document.getElementById('main').innerHTML = `<div style="padding:40px;color:var(--red);font-family:var(--mono)">Error loading dashboard: ${e.message}</div>`;
@@ -194,6 +402,7 @@ function openQ(id) {
   renderSidebar();
   renderQ();
   updateHeader();
+  setTimeout(syncEditor, 10);
 }
 
 function renderQ() {
@@ -232,6 +441,19 @@ function renderQ() {
         <div class="context-box">🌍 ${q.realWorldContext}</div>
         <div class="q-desc">${q.description}</div>
 
+        <div style="background:var(--bg2); border:1px solid var(--bd2); border-radius:var(--r); padding:12px 16px; margin:20px 0; display:flex; flex-direction:column; gap:10px;">
+          <div style="font-size:0.85rem; font-weight:600; color:var(--tx2)">📋 Kanban Revision Status</div>
+          <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+            <select id="rev-status" onchange="saveRevision('${q.id}', this.value, document.getElementById('rev-date').value)" style="background:var(--bg); border:1px solid var(--bd); color:var(--tx); padding:6px 10px; border-radius:4px; font-family:var(--sans); cursor:pointer;">
+              <option value="None" ${(!revisions[q.id] || revisions[q.id].status==='None')?'selected':''}>-- Select Status --</option>
+              <option value="To Review" ${revisions[q.id]?.status==='To Review'?'selected':''}>🔴 To Review</option>
+              <option value="Revising" ${revisions[q.id]?.status==='Revising'?'selected':''}>🟡 Revising</option>
+              <option value="Completed" ${revisions[q.id]?.status==='Completed'?'selected':''}>🟢 Completed</option>
+            </select>
+            <input type="date" id="rev-date" value="${revisions[q.id]?.date || ''}" onchange="saveRevision('${q.id}', document.getElementById('rev-status').value, this.value)" style="background:var(--bg); border:1px solid var(--bd); color:var(--tx); padding:5px 10px; border-radius:4px; font-family:var(--sans); color-scheme:dark; cursor:pointer;" title="Next Revision Date">
+          </div>
+        </div>
+
         <div class="sec-lbl">Constraints</div>
         <ul style="padding-left:18px;color:var(--tx2);font-size:.9rem;line-height:1.8">${q.constraints.map(c=>`<li>${c}</li>`).join('')}</ul>
 
@@ -241,6 +463,7 @@ function renderQ() {
         <div class="io-block">${q.outputFormat}</div>
         <div class="sec-lbl">Examples</div>
         ${exHTML}
+        <div style="height:40px"></div>
       </div>
 
       <!-- ── RIGHT: CODE + SOLUTIONS ── -->
@@ -253,18 +476,22 @@ function renderQ() {
           </div>
           <div class="acts">
             <button class="btn btn-clr" onclick="clearEditor()">Clear</button>
-            <button class="btn btn-run" onclick="runCode()" ${pyLoading ? 'disabled' : ''}>
+            <button class="btn btn-run" id="btn-run" onclick="runCode()" ${pyLoading ? 'disabled' : ''}>
               ${pyLoading ? '<span class="loader"></span> Loading...' : '<span>▶</span> Run'}
             </button>
-            <button class="btn btn-sub" onclick="submitAll()">Submit</button>
+            <button class="btn btn-sub" id="btn-sub" onclick="submitAll()">Submit</button>
           </div>
         </div>
 
         <div class="editor-area">
           <!-- YOUR CODE -->
           <div class="tab-panel ${activeTab==='code'?'on':''}" id="panel-code">
-            <textarea class="editor" id="editor" spellcheck="false"
-              placeholder="# Write your Python solution here&#10;n = int(input())&#10;">${loadCode(q.id)}</textarea>
+            <div class="editor-wrap">
+              <div class="editor-display" id="editor-display"></div>
+              <textarea class="editor-input" id="editor" spellcheck="false"
+                oninput="syncEditor()" onscroll="syncScroll()"
+                placeholder="# Write your Python solution here&#10;n = int(input())&#10;">${loadCode(q.id)}</textarea>
+            </div>
           </div>
 
           <!-- BRUTE FORCE -->
@@ -389,6 +616,12 @@ async function runCode() {
   const code = document.getElementById('editor')?.value || '';
   if (!code.trim()) return;
 
+  const btn = document.getElementById('btn-run');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loader"></span> Running...';
+  }
+
   if (activeTcTab === 'custom') {
     const inp = document.getElementById('custom-in')?.value || '';
     const out = document.getElementById('custom-out');
@@ -401,14 +634,23 @@ async function runCode() {
     const idx = parseInt(activeTcTab.replace('tc', ''));
     const tc  = currentQ.testCases.filter(t => !t.hidden)[idx];
     const out = document.getElementById(`tco-${idx}`);
-    out.className = 'tc-out out-run';
-    out.innerHTML = '<span class="loader"></span> Running…';
+    if (out) {
+      out.className = 'tc-out out-run';
+      out.innerHTML = '<span class="loader"></span> Running…';
+    }
     const result = await runPython(code, tc.input);
     const pass   = result.trim() === tc.expected.trim();
-    out.className = 'tc-out ' + (pass ? 'out-ok' : 'out-err');
-    out.textContent = result;
+    if (out) {
+      out.className = 'tc-out ' + (pass ? 'out-ok' : 'out-err');
+      out.textContent = result;
+    }
     tcResults[idx] = pass;
     updateTcTabs();
+  }
+
+  if (btn) {
+    btn.disabled = false;
+    btn.innerHTML = '<span>▶</span> Run';
   }
 }
 
@@ -418,27 +660,36 @@ async function submitAll() {
 
   const btn = document.querySelector('.btn-sub');
   btn.disabled = true;
-  btn.innerHTML = '<span class="loader"></span>';
+  btn.innerHTML = '<span class="loader"></span> Running...';
 
   const all = currentQ.testCases;
   tcResults  = [];
   const rows = [];
 
-  for (let i = 0; i < all.length; i++) {
-    const tc  = all[i];
-    const out = await runPython(code, tc.input);
-    const ok  = out.trim() === tc.expected.trim();
-    rows.push({ tc, ok, out, hidden: tc.hidden });
-    if (!tc.hidden) {
-      const vIdx = currentQ.testCases.filter(t => !t.hidden).indexOf(tc);
-      tcResults[vIdx] = ok;
-      const el = document.getElementById(`tco-${vIdx}`);
-      if (el) { el.className = 'tc-out ' + (ok ? 'out-ok' : 'out-err'); el.textContent = out; }
+  try {
+    for (let i = 0; i < all.length; i++) {
+      const tc = all[i];
+      btn.innerHTML = `<span class="loader"></span> ${tc.hidden ? 'Secret' : 'Test'} ${i+1}/${all.length}...`;
+      
+      const out = await runPython(code, tc.input);
+      const ok  = out.trim() === tc.expected.trim();
+      rows.push({ tc, ok, out, hidden: tc.hidden });
+      
+      if (!tc.hidden) {
+        const vIdx = currentQ.testCases.filter(t => !t.hidden).indexOf(tc);
+        if (vIdx !== -1) {
+          tcResults[vIdx] = ok;
+          const el = document.getElementById(`tco-${vIdx}`);
+          if (el) { el.className = 'tc-out ' + (ok ? 'out-ok' : 'out-err'); el.textContent = out; }
+        }
+      }
     }
+  } catch (err) {
+    console.error("submitAll internal error:", err);
   }
 
   btn.disabled = false;
-  btn.textContent = 'Submit';
+  btn.innerHTML = 'Submit';
   updateTcTabs();
 
   const pass = rows.filter(r => r.ok).length;
@@ -490,23 +741,38 @@ function closeVerdict(e) {
 
 // ── SIDEBAR ────────────────────────────────────────────────
 function renderSidebar() {
-  const items = ALL_QUESTIONS.map(q => {
-    const diff = (q.difficulty || 'Medium').toLowerCase();
-    const initial = (q.difficulty || 'M')[0];
-    const num = (q.id || '').split('-')[1] || '?';
-    return `
-    <div class="sb-item ${currentQ?.id === q.id ? 'active' : ''}" onclick="openQ('${q.id}')">
-      <span class="sb-num">${num}</span>
-      <span class="sb-name">${q.title}</span>
-      <span class="badge ${diff}">${initial}</span>
-    </div>`;
-  }).join('');
+  try {
+    const topicSections = TOPICS.map(t => {
+      const topicQs = ALL_QUESTIONS.filter(q => q.topic === t.name);
+      if (topicQs.length === 0) return '';
+      
+      const items = topicQs.map(q => {
+        const diff = (q.difficulty || 'Medium').toLowerCase();
+        const initial = (q.difficulty || 'M')[0];
+        const num = (q.id || '').split('-')[1] || '?';
+        const isSolved = solved.has(q.id);
+        return `
+        <div class="sb-item ${currentQ?.id === q.id ? 'active' : ''}" onclick="openQ('${q.id}')">
+          <span class="sb-num">${num}</span>
+          <span class="sb-name">${q.title}</span>
+          ${isSolved ? '<span style="color:var(--green); margin-right:4px;">✓</span>' : ''}
+          <span class="badge ${diff}">${initial}</span>
+        </div>`;
+      }).join('');
 
-  document.getElementById('sidebar').innerHTML = `
-    <div class="sb-label">Arrays (${ALL_QUESTIONS.filter(q=>q.topic==='Arrays').length})</div>
-    ${items}
-    <div class="sb-divider"></div>
-    <div class="sb-label" style="cursor:pointer" onclick="showDashboard()">⌂ Dashboard</div>`;
+      return `
+        <div class="sb-label">${t.name} (${topicQs.length})</div>
+        ${items}
+        <div class="sb-divider"></div>`;
+    }).join('');
+
+    document.getElementById('sidebar').innerHTML = `
+      ${topicSections}
+      <div class="sb-label" style="cursor:pointer" onclick="showDashboard()">⌂ Home Dashboard</div>
+      <div class="sb-label" style="cursor:pointer; color:var(--amber)" onclick="showKanban()">📋 Revision Board</div>`;
+  } catch(e) {
+    console.error('renderSidebar error:', e);
+  }
 }
 
 // ── HEADER ─────────────────────────────────────────────────
@@ -533,6 +799,22 @@ function copyCode(text) {
       }, 1500);
     }
   });
+}
+
+function syncEditor() {
+  const input = document.getElementById('editor');
+  const display = document.getElementById('editor-display');
+  if (!input || !display) return;
+  display.innerHTML = hl(input.value) + "\n "; 
+  saveCode(currentQ.id, input.value);
+}
+
+function syncScroll() {
+  const input = document.getElementById('editor');
+  const display = document.getElementById('editor-display');
+  if (!input || !display) return;
+  display.scrollTop = input.scrollTop;
+  display.scrollLeft = input.scrollLeft;
 }
 
 // ── BOOT ───────────────────────────────────────────────────

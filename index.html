@@ -14,15 +14,26 @@
 
   <!-- HEADER -->
   <header class="hdr">
-    <div class="hdr-logo" onclick="showDashboard()" style="cursor:pointer">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-        <rect x="2" y="3" width="20" height="18" rx="2" stroke="#00f2ff" stroke-width="1.5"/>
-        <path d="M8 8L4 12L8 16M16 8L20 12L16 16" stroke="#00f2ff" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M10 16L14 8" stroke="#00f2ff" stroke-width="1.5" stroke-linecap="round"/>
-      </svg>
-      <span>NQT</span> Prep
-      <span class="hdr-badge">PYTHON</span>
+    <div class="hdr-logo" style="cursor:pointer; display:flex; align-items:center; gap:12px;">
+      <button class="btn-icon" id="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle Sidebar" style="background:transparent; border:none; color:#00f2ff; cursor:pointer; font-size:20px;">☰</button>
+      <div onclick="showDashboard()" style="display:flex; align-items:center;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <rect x="2" y="3" width="20" height="18" rx="2" stroke="#00f2ff" stroke-width="1.5"/>
+          <path d="M8 8L4 12L8 16M16 8L20 12L16 16" stroke="#00f2ff" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M10 16L14 8" stroke="#00f2ff" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span>NQT</span> Prep
+        <span class="hdr-badge">PYTHON</span>
+      </div>
     </div>
+    <nav class="hdr-nav" style="flex-wrap: wrap; justify-content: center; overflow-x: auto;">
+      <button class="nav-btn" onclick="showDashboard()">Home</button>
+      <button class="nav-btn" onclick="showDashboard('arrays')">Arrays</button>
+      <button class="nav-btn" onclick="showDashboard('strings')">Strings</button>
+      <button class="nav-btn" onclick="showDashboard('sorting')">Sorting</button>
+      <button class="nav-btn" onclick="showDashboard('number-theory')">Number Theory</button>
+      <button class="nav-btn" style="border-color:var(--amber); color:var(--amber)" onclick="showKanban()">Kanban Board</button>
+    </nav>
     <div class="hdr-right">
       <div class="pill" id="hdr-solved">Solved: <b>0/0</b></div>
       <div class="pill">TCS NQT <b>2026</b></div>
@@ -45,30 +56,103 @@
      4. app.js           → UI + logic
      ═══════════════════════════════════════════════════════ -->
 
-<script src="questions/arrays/q1-move-zeroes.js?v=6"></script>
-<script src="questions/arrays/q02-second-largest-element.js?v=6"></script>
-<script src="questions/arrays/q03-missing-number.js?v=6"></script>
-<script src="questions/arrays/q04-two-sum.js?v=6"></script>
-<script src="questions/arrays/q05-rotate-array.js?v=6"></script>
-<script src="questions/arrays/q06-find-duplicate-number.js?v=6"></script>
-<script src="questions/arrays/q07-maximum-subarray-sum.js?v=6"></script>
-<script src="questions/arrays/q08-best-time-to-buy-and-sell-stock.js?v=6"></script>
-<script src="questions/arrays/q09-majority-element.js?v=6"></script>
-<script src="questions/arrays/q10-remove-duplicates-from-sorted-array.js?v=6"></script>
-<script src="questions/arrays/q11-leaders-in-array.js?v=6"></script>
-<script src="questions/arrays/q12-rearrange-array-alternately.js?v=6"></script>
-<script src="questions/arrays/q13-union-of-two-arrays.js?v=6"></script>
-<script src="questions/arrays/q14-intersection-of-two-arrays.js?v=6"></script>
-<script src="questions/arrays/q15-longest-consecutive-sequence.js?v=6"></script>
-<script src="questions/arrays/q16-subarray-with-given-sum.js?v=6"></script>
-<script src="questions/arrays/q17-count-pairs-with-given-sum.js?v=6"></script>
-<script src="questions/arrays/q18-equilibrium-index.js?v=6"></script>
-<script src="questions/arrays/q19-product-of-array-except-self.js?v=6"></script>
-<script src="questions/arrays/q20-missing-and-repeating-number.js?v=6"></script>
+<script src="questions/arrays/q1-move-zeroes.js?v=10"></script>
+<script src="questions/arrays/q02-second-largest-element.js?v=10"></script>
+<script src="questions/arrays/q03-missing-number.js?v=10"></script>
+<script src="questions/arrays/q04-two-sum.js?v=10"></script>
+<script src="questions/arrays/q05-rotate-array.js?v=10"></script>
+<script src="questions/arrays/q06-find-duplicate-number.js?v=10"></script>
+<script src="questions/arrays/q07-maximum-subarray-sum.js?v=10"></script>
+<script src="questions/arrays/q08-best-time-to-buy-and-sell-stock.js?v=10"></script>
+<script src="questions/arrays/q09-majority-element.js?v=10"></script>
+<script src="questions/arrays/q10-remove-duplicates-from-sorted-array.js?v=10"></script>
+<script src="questions/arrays/q11-leaders-in-array.js?v=10"></script>
+<script src="questions/arrays/q12-rearrange-array-alternately.js?v=10"></script>
+<script src="questions/arrays/q13-union-of-two-arrays.js?v=10"></script>
+<script src="questions/arrays/q14-intersection-of-two-arrays.js?v=10"></script>
+<script src="questions/arrays/q15-longest-consecutive-sequence.js?v=10"></script>
+<script src="questions/arrays/q16-subarray-with-given-sum.js?v=10"></script>
+<script src="questions/arrays/q17-count-pairs-with-given-sum.js?v=10"></script>
+<script src="questions/arrays/q18-equilibrium-index.js?v=10"></script>
+<script src="questions/arrays/q19-product-of-array-except-self.js?v=10"></script>
+<script src="questions/arrays/q20-missing-and-repeating-number.js?v=10"></script>
 
-<script src="js/topics.js?v=6"></script>
-<script src="js/palette.js?v=6"></script>
-<script src="js/app.js?v=6"></script>
+<!-- Strings questions -->
+<script src="questions/strings/q01-palindrome.js?v=10"></script>
+<script src="questions/strings/q02-vowels-consonants.js?v=10"></script>
+<script src="questions/strings/q03-anagrams.js?v=10"></script>
+<script src="questions/strings/q04-first-non-repeating.js?v=10"></script>
+<script src="questions/strings/q05-reverse-words.js?v=10"></script>
+<script src="questions/strings/q06-remove-duplicates.js?v=10"></script>
+<script src="questions/strings/q07-longest-common-prefix.js?v=10"></script>
+<script src="questions/strings/q08-maximum-occurring-character.js?v=10"></script>
+<script src="questions/strings/q09-contains-only-digits.js?v=10"></script>
+<script src="questions/strings/q10-wildcard-matching.js?v=10"></script>
+<script src="questions/strings/q11-toggle-case.js?v=10"></script>
+<script src="questions/strings/q12-print-duplicates.js?v=10"></script>
+<script src="questions/strings/q13-remove-vowels.js?v=10"></script>
+<script src="questions/strings/q14-largest-word.js?v=10"></script>
+<script src="questions/strings/q15-string-rotation.js?v=10"></script>
+<script src="questions/strings/q16-permutations.js?v=10"></script>
+<script src="questions/strings/q17-compress-string.js?v=10"></script>
+<script src="questions/strings/q18-remove-blacklist.js?v=10"></script>
+<script src="questions/strings/q19-count-words.js?v=10"></script>
+<script src="questions/strings/q20-balance-brackets.js?v=10"></script>
+<script src="questions/strings/q21-pangram.js?v=10"></script>
+<script src="questions/strings/q22-all-substrings.js?v=10"></script>
+
+<!-- Sorting questions -->
+<script src="questions/sorting/q01-dutch-flag.js?v=10"></script>
+<script src="questions/sorting/q02-bubble-sort.js?v=10"></script>
+<script src="questions/sorting/q03-selection-sort.js?v=10"></script>
+<script src="questions/sorting/q04-insertion-sort.js?v=10"></script>
+<script src="questions/sorting/q05-sort-by-frequency.js?v=10"></script>
+<script src="questions/sorting/q06-merge-sorted-arrays.js?v=10"></script>
+<script src="questions/sorting/q07-sort-by-length.js?v=10"></script>
+<script src="questions/sorting/q08-sort-by-absolute-diff.js?v=10"></script>
+<script src="questions/sorting/q09-ascending-descending.js?v=10"></script>
+<script src="questions/sorting/q10-merge-sort.js?v=10"></script>
+<script src="questions/sorting/q11-quick-sort.js?v=10"></script>
+<script src="questions/sorting/q12-sort-string.js?v=10"></script>
+<script src="questions/sorting/q13-bubble-sort-swaps.js?v=10"></script>
+<script src="questions/sorting/q14-kth-smallest.js?v=10"></script>
+<script src="questions/sorting/q15-case-insensitive-sort.js?v=10"></script>
+<script src="questions/sorting/q16-alternating-pos-neg.js?v=10"></script>
+<script src="questions/sorting/q17-sort-pairs.js?v=10"></script>
+<script src="questions/sorting/q18-min-swaps.js?v=10"></script>
+
+<!-- Number Theory questions -->
+<script src="questions/number-theory/q01-armstrong-number.js?v=10"></script>
+<script src="questions/number-theory/q02-check-prime.js?v=10"></script>
+<script src="questions/number-theory/q03-nth-fibonacci.js?v=10"></script>
+<script src="questions/number-theory/q04-reverse-number.js?v=10"></script>
+<script src="questions/number-theory/q05-gcd-lcm.js?v=10"></script>
+<script src="questions/number-theory/q06-digital-root.js?v=10"></script>
+<script src="questions/number-theory/q07-binary-to-decimal.js?v=10"></script>
+<script src="questions/number-theory/q08-count-primes.js?v=10"></script>
+<script src="questions/number-theory/q09-vehicle-manufacturing.js?v=10"></script>
+<script src="questions/number-theory/q10-sum-of-ap.js?v=10"></script>
+<script src="questions/number-theory/q11-perfect-number.js?v=10"></script>
+<script src="questions/number-theory/q12-strong-number.js?v=10"></script>
+<script src="questions/number-theory/q13-automorphic-number.js?v=10"></script>
+<script src="questions/number-theory/q14-harshad-number.js?v=10"></script>
+<script src="questions/number-theory/q15-leap-year.js?v=10"></script>
+<script src="questions/number-theory/q16-goldbach.js?v=10"></script>
+<script src="questions/number-theory/q17-prime-factors.js?v=10"></script>
+<script src="questions/number-theory/q18-nth-term-mixed-series.js?v=10"></script>
+<script src="questions/number-theory/q19-sum-of-gp.js?v=10"></script>
+<script src="questions/number-theory/q20-factorial.js?v=10"></script>
+<script src="questions/number-theory/q21-power-of-two.js?v=10"></script>
+<script src="questions/number-theory/q22-number-system-conversions.js?v=10"></script>
+<script src="questions/number-theory/q23-pair-sum-target.js?v=10"></script>
+<script src="questions/number-theory/q24-pascal-triangle.js?v=10"></script>
+<script src="questions/number-theory/q25-digit-counts.js?v=10"></script>
+<script src="questions/number-theory/q26-max-min-digit.js?v=10"></script>
+<script src="questions/number-theory/q27-quadratic-roots.js?v=10"></script>
+<script src="questions/number-theory/q28-add-fractions.js?v=10"></script>
+<script src="js/topics.js?v=10"></script>
+<script src="js/palette.js?v=10"></script>
+<script src="js/app.js?v=10"></script>
 
 </body>
 </html>

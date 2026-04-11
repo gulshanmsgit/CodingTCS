@@ -93,6 +93,15 @@ body::before {
   grid-template-rows: 62px 1fr;
   height: 100vh;
   overflow: hidden;
+  transition: grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.shell.collapsed {
+  grid-template-columns: 0px 1fr;
+}
+.shell.collapsed .sidebar {
+  opacity: 0;
+  visibility: hidden;
+  padding: 0;
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -145,6 +154,36 @@ body::before {
   box-shadow: 0 0 12px var(--cyan-glow);
 }
 
+.hdr-nav {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 1px solid var(--bd2);
+  color: var(--tx2);
+  padding: 6px 14px;
+  border-radius: var(--r-sm);
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-btn:hover {
+  background: var(--bg3);
+  color: var(--cyan);
+  border-color: var(--cyan-dim);
+}
+.nav-btn.active {
+  background: var(--cyan-dim);
+  color: var(--cyan);
+  border-color: var(--cyan);
+}
+
 .hdr-right { display: flex; gap: 10px; align-items: center; }
 
 .pill {
@@ -166,12 +205,135 @@ body::before {
   background: var(--bg2);
   border-right: 1px solid var(--bd);
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 16px 8px 24px;
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 1.5px;
+  transition: opacity 0.2s, padding 0.3s;
 }
 
+.sb-divider { height: 1px; background: var(--bd); margin: 8px 12px; opacity: 0.5; }
+
+/* ── KANBAN DESIGN ── */
+.kb-grid {
+  display: flex;
+  gap: 24px;
+  min-height: 60vh;
+  padding: 10px 0;
+}
+
+.kb-col {
+  flex: 1;
+  background: var(--bg2);
+  border: 1px solid var(--bd2);
+  border-radius: var(--r-lg);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  min-width: 300px;
+}
+
+.kb-col-hdr {
+  font-family: var(--sans);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--tx);
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--bd2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  letter-spacing: -0.02em;
+}
+
+.kb-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 300px;
+}
+
+.kb-card {
+  background: var(--bg3);
+  border: 1px solid var(--bd2);
+  border-radius: var(--r);
+  padding: 16px;
+  cursor: grab;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  font-family: var(--sans);
+}
+
+.kb-card .q-card-id {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 0.75rem;
+  color: var(--cyan);
+  opacity: 0.8;
+}
+
+.kb-card:hover { border-color: var(--cyan); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,242,255,0.15); }
+.kb-card:active { cursor: grabbing; }
+.kb-card.dragging { opacity: 0.4; transform: scale(0.95); }
+
+/* ── MODERN EDITOR ── */
+.editor-wrap {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  background: #0d1117;
+  border-radius: 4px;
+  overflow: hidden;
+  /* Use a guaranteed monospace stack */
+  font-family: 'Cascadia Code', 'Source Code Pro', 'Fira Code', 'Courier New', monospace !important;
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  letter-spacing: 0px !important;
+}
+
+.editor-display, .editor-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 20px !important;
+  margin: 0;
+  border: none;
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+  box-sizing: border-box;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  letter-spacing: inherit !important;
+  /* Disable any browser subpixel font scaling or ligatures that cause drift */
+  font-variant-ligatures: none !important;
+  -webkit-font-variant-ligatures: none !important;
+  font-feature-settings: "liga" 0 !important;
+}
+
+.editor-input {
+  background: transparent !important;
+  color: transparent !important;
+  caret-color: #fff !important;
+  z-index: 2;
+  resize: none;
+  overflow-y: auto;
+  outline: none;
+}
+
+.editor-display {
+  z-index: 1;
+  color: #c9d1d9;
+  pointer-events: none;
+  overflow-y: auto;
+  scrollbar-width: none; /* Hide display scrollbar to prevent layout shift */
+}
+.editor-display::-webkit-scrollbar { display: none; }
 .sb-label {
   font-size: 0.65rem;
   font-weight: 700;
